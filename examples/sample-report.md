@@ -1,11 +1,13 @@
 # Codemod Sentinel Report
 
-Codemod Sentinel is an AI-assisted reporting layer for codemods and migration patches. This MVP uses deterministic heuristics instead of external LLM calls, so it is demo-friendly and requires no API keys.
+Codemod Sentinel is an AI-assisted reporting layer for codemods and migration patches.
+
+This MVP uses deterministic heuristics instead of external LLM calls, so it is demo-friendly and requires no API keys.
 
 ## Summary
 
 - Diff analyzed: `examples/sample.diff`
-- Generated at: 2026-05-02T12:12:32.694Z
+- Generated at: `2026-05-02T12:12:32.694Z`
 - Files changed: 5
 - Lines added: 9
 - Lines removed: 13
@@ -15,7 +17,13 @@ Codemod Sentinel is an AI-assisted reporting layer for codemods and migration pa
 
 ## AI-Assisted Review Narrative
 
-AI-assisted reporting layer: deterministic heuristics rated this migration at 77/100. Main review areas: package dependency changes detected, function call arguments were removed, file removed by migration.
+AI-assisted reporting layer: deterministic heuristics rated this migration at 77/100.
+
+Main review areas:
+
+- package dependency changes detected
+- function call arguments were removed
+- file removed by migration
 
 ## Findings
 
@@ -32,7 +40,9 @@ AI-assisted reporting layer: deterministic heuristics rated this migration at 77
 - Severity: HIGH
 - Score impact: 16
 - File: `src/pages/users.tsx`
-- Evidence: Before: const users = useQuery("users", fetchUsers, { staleTime: 5000 }); | After: const users = useQuery({ queryKey: ["users"], queryFn: fetchUsers });
+- Evidence:
+  - Before: `const users = useQuery("users", fetchUsers, { staleTime: 5000 });`
+  - After: `const users = useQuery({ queryKey: ["users"], queryFn: fetchUsers });`
 - Recommendation: Confirm the target API signature changed intentionally and add regression coverage around the call site.
 
 ### 3. File removed by migration
@@ -40,7 +50,7 @@ AI-assisted reporting layer: deterministic heuristics rated this migration at 77
 - Severity: HIGH
 - Score impact: 15
 - File: `src/legacy/cache.ts`
-- Evidence: src/legacy/cache.ts was deleted
+- Evidence: `src/legacy/cache.ts` was deleted
 - Recommendation: Confirm no imports, routes, build entries, or runtime references still depend on this file.
 
 ### 4. Import rewrites may alter module resolution
@@ -48,7 +58,7 @@ AI-assisted reporting layer: deterministic heuristics rated this migration at 77
 - Severity: MEDIUM
 - Score impact: 12
 - File: `src/pages/users.tsx`
-- Evidence: 1 imports removed and 1 imports added
+- Evidence: 1 import removed and 1 import added
 - Recommendation: Check named exports, default exports, tree-shaking behavior, and bundler aliases.
 
 ### 5. Build or tool configuration changed

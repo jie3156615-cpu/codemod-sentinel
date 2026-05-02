@@ -1,8 +1,10 @@
 # Codemod Sentinel
 
-Codemod Sentinel is an AI-assisted safety reviewer for codemods and migration patches. It analyzes JavaScript and TypeScript git diffs, detects risky migration patterns, and generates a concise safety report for reviewers.
+Codemod Sentinel is an AI-assisted safety reviewer for codemods and migration patches.
 
-No API key required. This hackathon MVP does not call a real LLM; it simulates an AI-assisted reporting layer with deterministic heuristics so the demo is fast, transparent, and reliable.
+It analyzes JavaScript and TypeScript git diffs, detects risky migration patterns, and generates a concise safety report for reviewers.
+
+**No API key required.** This hackathon MVP does not call a real LLM. It simulates an AI-assisted reporting layer with deterministic heuristics, so the demo is fast, transparent, and reliable.
 
 ## Quick Start
 
@@ -12,14 +14,40 @@ npm run build
 npm run demo
 ```
 
-The demo scans `examples/sample.diff` and generates:
+The demo scans:
 
-```bash
-sentinel-report.md
-sentinel-report.json
+```text
+examples/sample.diff
 ```
 
-You can also inspect a committed example report at `examples/sample-report.md`.
+and generates:
+
+- `sentinel-report.md`
+- `sentinel-report.json`
+
+A committed example report is also available at:
+
+- `examples/sample-report.md`
+
+## What It Does
+
+Codemod Sentinel parses a git diff and highlights migration risks such as:
+
+- package dependency changes
+- import rewrites
+- removed function arguments
+- removed files
+- config file changes
+- test file changes
+- large diff size
+
+Each finding includes:
+
+- severity
+- score impact
+- file path
+- evidence from the diff
+- review recommendation
 
 ## Why It Matters
 
@@ -31,40 +59,23 @@ Large framework upgrades and automated codemods can change hundreds of files at 
 - Were config files, tests, or runtime files changed?
 - Is this migration too large to review safely in one pass?
 
-Codemod Sentinel turns those questions into an immediate report.
+Codemod Sentinel turns those questions into an immediate migration safety report.
 
 ## Why This Is Different
 
-Most migration tools focus on creating another framework-specific codemod. Codemod Sentinel reviews the codemod output instead. It sits after automated changes and helps teams decide whether the migration patch is safe to review, test, and merge.
+Most migration tools focus on creating another framework-specific codemod.
 
-## Installation
+Codemod Sentinel reviews the codemod output instead. It sits after automated changes and helps teams decide whether the migration patch is safe to review, test, and merge.
 
-```bash
-npm install
-```
+## CLI Usage
 
-## Demo
-
-Run the included sample migration scan:
+Run the included demo:
 
 ```bash
 npm run demo
 ```
 
-The command analyzes:
-
-```bash
-examples/sample.diff
-```
-
-and generates:
-
-```bash
-sentinel-report.md
-sentinel-report.json
-```
-
-## CLI Usage
+Run the scanner directly through npm:
 
 ```bash
 npm run scan -- --diff examples/sample.diff
@@ -76,7 +87,7 @@ After building, the CLI entry can also be used as:
 codemod-sentinel scan --diff examples/sample.diff
 ```
 
-## Example Output
+## Example Console Output
 
 ```text
 Codemod Sentinel scan complete
@@ -86,19 +97,12 @@ Generated sentinel-report.md
 Generated sentinel-report.json
 ```
 
-The Markdown report includes:
-
-- overall risk score
-- AI-assisted review narrative
-- risk findings
-- evidence from the diff
-- review recommendations
-- suggested migration checklist
-
 ## Sample Report Excerpt
 
 ```md
 # Codemod Sentinel Report
+
+## Summary
 
 - Files changed: 5
 - Lines added: 9
@@ -106,24 +110,24 @@ The Markdown report includes:
 - Overall risk score: 77/100
 - Overall risk level: CRITICAL
 
+## AI-Assisted Review Narrative
+
 AI-assisted reporting layer: deterministic heuristics rated this migration at 77/100. Main review areas: package dependency changes detected, function call arguments were removed, file removed by migration.
 ```
 
-## MVP Scope
+## Hackathon MVP Scope
 
-This MVP detects and scores:
+This MVP intentionally keeps the implementation simple:
 
-- package.json dependency changes
-- import rewrites
-- removed function arguments
-- removed files
-- config file changes
-- test file changes
-- large diff size
+- no external API keys
+- no real LLM call
+- no framework-specific migration engine
+- deterministic scoring for repeatable demos
+- Markdown and JSON report generation
+
+The MVP is framework-agnostic: it does not try to know every React, Next.js, Vue, Angular, or Node migration rule. It highlights review risk patterns that appear across many codemods.
 
 Future versions could connect to an LLM, inspect full repository context, suggest safer codemod chunks, and integrate with pull request checks.
-
-The MVP is intentionally framework-agnostic: it does not try to know every React, Next.js, Vue, Angular, or Node migration rule. It highlights review risk patterns that appear across many codemods.
 
 ## Development
 
