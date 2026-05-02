@@ -17,8 +17,8 @@ program
 program
   .command("scan")
   .description("Analyze a git diff and generate migration safety reports.")
-  .requiredOption("--diff <path>", "Path to a git diff file")
-  .option("--out-dir <path>", "Directory for generated reports", ".")
+  .requiredOption("--diff <file>", "Path to a git diff file")
+  .option("--out-dir <dir>", "Directory for generated reports", ".")
   .action(async (options: { diff: string; outDir: string }) => {
     const diffPath = path.resolve(options.diff);
     const outDir = path.resolve(options.outDir);
