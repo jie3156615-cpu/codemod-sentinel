@@ -1,0 +1,32 @@
+{
+  "name": "codemod-sentinel",
+  "version": "0.1.0",
+  "description": "AI-assisted safety reviewer for codemods and migration patches.",
+  "type": "module",
+  "bin": {
+    "codemod-sentinel": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "demo": "tsx src/index.ts scan --diff examples/sample.diff",
+    "scan": "tsx src/index.ts scan"
+  },
+  "keywords": [
+    "codemod",
+    "migration",
+    "diff",
+    "typescript",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}
